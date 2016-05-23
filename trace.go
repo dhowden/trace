@@ -34,3 +34,14 @@ func LazyPrintf(ctx context.Context, format string, a ...interface{}) {
 	}
 	tr.LazyPrintf(format, a...)
 }
+
+// SetError is a light wrapper around golang.org/x/net/trace/Trace.SetError which extracts
+// a Trace instance from ctx and calls SetError on it.  If no Trace instance is attached to the
+// context then this method returns immediately.
+func SetError(ctx context.Context) {
+	tr, ok := trace.FromContext(ctx)
+	if !ok {
+		return
+	}
+	tr.SetError()
+}
