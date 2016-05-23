@@ -14,8 +14,8 @@ import (
 )
 
 // LazyLog is a light wrapper around golang.org/x/net/trace/Trace.LazyLog which extracts the
-// Trace instance from ctx and calls LazyLog on it.  If no such instance exists, this method
-// returns.
+// Trace instance from ctx and calls LazyLog on it.  If no Trace instance is attached to the
+// context then this method returns immediately.
 func LazyLog(ctx context.Context, x fmt.Stringer, sensitive bool) {
 	tr, ok := trace.FromContext(ctx)
 	if !ok {
@@ -25,8 +25,8 @@ func LazyLog(ctx context.Context, x fmt.Stringer, sensitive bool) {
 }
 
 // LazyPrintf is a light wrapper around golang.org/x/net/trace/Trace.LazyPrintf which extracts
-// a Trace instance from ctx and calls LazyPrintf on it.  If no such instance exists, this method
-// returns.
+// a Trace instance from ctx and calls LazyPrintf on it.  If no Trace instance is attached to the
+// context then this method returns immediately.
 func LazyPrintf(ctx context.Context, format string, a ...interface{}) {
 	tr, ok := trace.FromContext(ctx)
 	if !ok {
